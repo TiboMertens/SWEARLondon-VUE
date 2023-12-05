@@ -1,6 +1,11 @@
 <script setup>
+import Nav from "./components/Nav.vue";
 </script>
 
-<template></template>
+<template>
+  <div class=""></div>
+  <Nav />
+  <router-view></router-view>
+</template>
 
 <style scoped></style>

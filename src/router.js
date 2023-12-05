@@ -1,7 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import LoginPage from './components/LoginPage.vue';
 
 const routes = [
-  { path: '/'},
+  { path: '/', component: LoginPage},
+  { path: '/orders'},
+  { path: '/updatePassword'},
 ];
 
 const router = createRouter({

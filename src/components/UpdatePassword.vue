@@ -4,9 +4,9 @@ import LoginForm from './LoginForm.vue';
 </script>
 
 <template>
-    <div class="flex flex-col md:flex-row bg-[#dddddd]" style="height: calc(100vh + 28px)">
+    <div class="flex flex-col md:flex-row bg-[#f7f7f7]" style="height: calc(100vh + 28px)">
         <div class="md:w-1/2 hidden md:block">
-            <img src="../assets/shoes-login.webp" alt="SWEAR brand showcase">
+            <img src="../assets/shoes-login.webp" class="h-screen" alt="SWEAR brand showcase">
         </div>
         <div class="w-full md:w-1/2">
             <div class="h-screen flex justify-center items-center">

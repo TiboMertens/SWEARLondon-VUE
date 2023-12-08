@@ -1,19 +1,17 @@
 <script setup>
+import { ref } from 'vue';
 import { useRoute } from "vue-router";
-
-import { ref, onMounted } from 'vue';
-
-import DeleteOrder from "./DeleteOrder.vue";
+// import router.js
+import router from '../router';
 
 const route = useRoute();
 const orderId = route.params.id;
 
-const order = ref({});
-
-const fetchOrder = async () => {
+const deleteOrder = async () => {
+    console.log('komt in de functie :)');
     try {
         const response = await fetch(`http://localhost:3000/api/v1/shoes/${orderId}`, {
-            method: 'GET',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -22,28 +20,20 @@ const fetchOrder = async () => {
         const result = await response.json();
 
         if (response.ok) {
-            order.value = result.data;
-            console.log(result.data);
+            console.log(result.message);
+            router.push('/');
         } else {
             console.error(result.message);
         }
     } catch (error) {
-        console.error('Error fetching shoe:', error);
+        console.error('Error deleting order:', error);
     }
 };
 
-onMounted(() => {
-    fetchOrder();
-});
 </script>
 
 <template>
     <div>
-        <p>Status: {{ order.status }}</p>
-
-        <!-- Other properties can be displayed similarly -->
-        <DeleteOrder :orderId="orderId" />
+        <a @click.prevent="deleteOrder" class="delete" href="#">Bestelling Verwijderen</a>
     </div>
 </template>
-
-<style scoped></style>

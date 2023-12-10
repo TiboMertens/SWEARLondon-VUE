@@ -1,6 +1,5 @@
 <script setup>
-import LoginForm from './LoginForm.vue';
-
+import PasswordForm from './PasswordForm.vue';
 </script>
 
 <template>
@@ -12,7 +11,7 @@ import LoginForm from './LoginForm.vue';
             <div class="h-screen flex justify-center items-center">
                 <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-md w-[350px] mx-auto">
                     <h1 class="font-bold text-2xl text-center mb-6">Update password</h1>
-                    <LoginForm />
+                    <PasswordForm />
                 </div>
             </div>
         </div>

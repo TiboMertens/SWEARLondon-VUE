@@ -1,5 +1,5 @@
 <script setup>
-import OrderCard from './OrderCard.vue';
+import OrderCard from '../components/OrderCard.vue';
 import { ref, onMounted } from 'vue';
 
 const shoes = ref([]);

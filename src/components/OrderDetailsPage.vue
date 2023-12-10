@@ -3,6 +3,8 @@ import { useRoute } from "vue-router";
 
 import { ref, onMounted } from 'vue';
 
+import DeleteOrder from "./DeleteOrder.vue";
+
 const route = useRoute();
 const orderId = route.params.id;
 

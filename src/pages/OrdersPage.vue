@@ -1,6 +1,7 @@
 <script setup>
-import OrderCard from './OrderCard.vue';
 import { ref, onMounted } from 'vue';
+
+import OrderCard from '../components/OrderCard.vue';
 
 const shoes = ref([]);
 let totalOrders = ref(0);

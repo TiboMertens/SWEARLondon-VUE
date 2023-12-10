@@ -1,5 +1,5 @@
 <script setup>
-import PasswordForm from './PasswordForm.vue';
+import PasswordForm from '../components/PasswordForm.vue';
 </script>
 
 <template>

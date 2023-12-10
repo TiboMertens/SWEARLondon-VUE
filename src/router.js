@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import LoginPage from './components/LoginPage.vue';
-import updatePassword from './components/UpdatePassword.vue';
-import Orders from './components/OrdersPage.vue';
-import Details from './components/OrderDetailsPage.vue';
+import LoginPage from './pages/LoginPage.vue';
+import updatePassword from './pages/UpdatePassword.vue';
+import Orders from './pages/OrdersPage.vue';
+import Details from './pages/OrderDetailsPage.vue';
 
 const routes = [
   { path: '/', component: LoginPage },

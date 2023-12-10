@@ -3,7 +3,7 @@ import { useRoute } from "vue-router";
 
 import { ref, onMounted } from 'vue';
 
-import DeleteOrder from "./DeleteOrder.vue";
+import DeleteOrder from "../components/DeleteOrder.vue";
 
 const route = useRoute();
 const orderId = route.params.id;
@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
     <div class="">
-        <h1 class="text-center text-[32px] font-bold pt-10 pb-[175px]">Order details</h1>
+        <h1 class="text-center text-[32px] font-bold pt-10 pb-[175px]">Order details <span class="text-sm font-normal text-red-500"><DeleteOrder :orderId="orderId" /></span></h1>
         <div class="flex gap-10 justify-center">
             <div>
                 <h2 class="font-bold text-xl">Information</h2>

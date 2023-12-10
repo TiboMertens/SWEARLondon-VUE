@@ -30,15 +30,39 @@ const fetchOrder = async () => {
     }
 };
 
+const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+};
+
 onMounted(() => {
     fetchOrder();
 });
 </script>
 
 <template>
-    <div>
-        <p>Status: {{ order.status }}</p>
-        <!-- Other properties can be displayed similarly -->
+    <div class="">
+        <h1 class="text-center text-[32px] font-bold pt-10 pb-[175px]">Order details</h1>
+        <div class="flex gap-10 justify-center">
+            <div>
+                <h2 class="font-bold text-xl">Information</h2>
+                <p>Order ID: {{ order.id }}</p>
+                <p>Order date: {{ formatDate(order.date) }}</p>
+                <p>Order status: {{ order.status }}</p>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Size: {{ order.size }}</p>
+            </div>
+            <div>
+                <h2 class="font-bold text-xl">Customizations</h2>
+                <p>Laces color: {{ order.laces }}</p>
+                <p>outside_1 color: {{ order.outside_1 }}</p>
+                <p>outside_2 color: {{ order.outside_2 }}</p>
+                <p>outside_3 color: {{ order.outside_3 }}</p>
+                <p>sole top color: {{ order.sole_top }}</p>
+                <p>sole bottom color: {{ order.sole_bottom }}</p>
+                <p>inside color: {{ order.inside }}</p>
+            </div>
+        </div>
     </div>
 </template>
 

@@ -2,16 +2,41 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
-const logIn = async () => {
-    
-}
+const email = ref('');
+const password = ref('');
+const errorMessage = ref('');
+
+
+const Login = async () => {
+    const response = await fetch('http://localhost:3000/api/v1/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_mail: email.value,
+            password: password.value,
+        }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        localStorage.setItem('token', data.data.token);
+        //check the value stored in localstorage
+        router.push('/orders');
+    } else {
+        errorMessage.value = data.message;
+    }
+};
 
 
 </script>
 
 <template>
-    <form @submit.prevent="logIn">
+    <form @submit.prevent="Login">
         <div class="mb-[32px]">
             <div class="mb-4">
                 <label for="email" class="block text-gray-600 text-sm font-semibold mb-2">Email</label>

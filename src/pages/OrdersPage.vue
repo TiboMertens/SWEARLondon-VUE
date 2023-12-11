@@ -5,6 +5,8 @@ import { ref, onMounted } from 'vue';
 const shoes = ref([]);
 let totalOrders = ref(0);
 
+let socket = null;
+
 const fetchShoes = async () => {
     try {
         const response = await fetch(`http://localhost:3000/api/v1/shoes`, {
@@ -29,6 +31,19 @@ const fetchShoes = async () => {
 
 onMounted(() => {
     fetchShoes();
+
+    socket = new WebSocket('ws://localhost:3000/primus');
+
+    //listen for new data
+    socket.onmessage = function (event) {
+        let order = JSON.parse(event.data);
+        console.log(order);
+        if (order.action === 'newOrder') {
+            console.log(order);
+            shoes.value.push(order);
+            totalOrders.value = shoes.value.length;
+        }
+    };
 });
 
 </script>

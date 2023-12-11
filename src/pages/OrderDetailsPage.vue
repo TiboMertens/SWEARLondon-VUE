@@ -45,7 +45,7 @@ onMounted(() => {
 <template>
     <div class="">
         <h1 class="text-center text-[32px] font-bold pt-10 pb-10">Order details <span class="text-sm font-normal text-red-500"><DeleteOrder :orderId="orderId" /></span></h1>
-        <div class="flex gap-10 justify-center">
+        <div class="md:flex pb-5 gap-10 justify-center">
             <div>
                 <h2 class="font-bold text-xl">Information</h2>
                 <p>Order ID: {{ order.id }}</p>

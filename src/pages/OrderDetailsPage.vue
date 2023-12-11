@@ -44,25 +44,31 @@ onMounted(() => {
 
 <template>
     <div class="">
-        <h1 class="text-center text-[32px] font-bold pt-10 pb-[175px]">Order details <span class="text-sm font-normal text-red-500"><DeleteOrder :orderId="orderId" /></span></h1>
+        <h1 class="text-center text-[32px] font-bold pt-10 pb-10">Order details <span class="text-sm font-normal text-red-500"><DeleteOrder :orderId="orderId" /></span></h1>
         <div class="flex gap-10 justify-center">
             <div>
                 <h2 class="font-bold text-xl">Information</h2>
                 <p>Order ID: {{ order.id }}</p>
+                <p>Ordered by: {{ order.username }}</p>
                 <p>Order date: {{ formatDate(order.date) }}</p>
                 <p>Order status: {{ order.status }}</p>
-                <p>Quantity: {{ order.quantity }}</p>
-                <p>Size: {{ order.size }}</p>
             </div>
             <div>
                 <h2 class="font-bold text-xl">Customizations</h2>
-                <p>Laces color: {{ order.laces }}</p>
-                <p>outside_1 color: {{ order.outside_1 }}</p>
-                <p>outside_2 color: {{ order.outside_2 }}</p>
-                <p>outside_3 color: {{ order.outside_3 }}</p>
-                <p>sole top color: {{ order.sole_top }}</p>
-                <p>sole bottom color: {{ order.sole_bottom }}</p>
-                <p>inside color: {{ order.inside }}</p>
+                <p>Laces color: {{ order.laces_color }}</p>
+                <p>Laces material {{ order.laces_material }}</p>
+                <p>Outside_1 color: {{ order.outside_1_color }}</p>
+                <p>Outside_1 material: {{ order.outside_1_material }}</p>
+                <p>Outside_2 color: {{ order.outside_2_color }}</p>
+                <p>Outside_2 material: {{ order.outside_2_material }}</p>
+                <p>Outside_3 color: {{ order.outside_3_color }}</p>
+                <p>Outside_3 material: {{ order.outside_3_material }}</p>
+                <p>Sole top color: {{ order.sole_top_color }}</p>
+                <p>Sole top material: {{ order.sole_top_material }}</p>
+                <p>Sole bottom color: {{ order.sole_bottom_color }}</p>
+                <p>Sole bottom material: {{ order.sole_bottom_material }}</p>
+                <p>Inside color: {{ order.inside_color }}</p>
+                <p>inside material: {{ order.inside_material }}</p>
             </div>
         </div>
     </div>

@@ -3,6 +3,8 @@ import OrderCard from '../components/OrderCard.vue';
 import { ref, onMounted } from 'vue';
 import { jwtDecode } from "jwt-decode";
 import router from '../router';
+import { useRouter } from 'vue-router';
+const route = useRouter();
 
 const shoes = ref([]);
 let totalOrders = ref(0);
@@ -50,7 +52,7 @@ const fetchShoes = async () => {
             totalOrders.value = result.data.length;
         } else {
             console.error(result.message);
-            router.push('/');
+            route.push('/');
         }
     } catch (error) {
         console.error('Error fetching shoes:', error);
@@ -69,6 +71,7 @@ const checkAdminStatus = () => {
         } else {
             isAdmin = false;
             console.log('User is not an admin');
+            route.push('/');
         }
 
         return decodedToken;
@@ -76,7 +79,7 @@ const checkAdminStatus = () => {
         // User is not logged in
         isAdmin = false;
         //redirect to login page
-        router.push('/');
+        route.push('/');
         console.log('User is not logged in');
     }
 };

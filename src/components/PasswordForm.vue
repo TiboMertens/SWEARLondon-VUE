@@ -3,7 +3,8 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { jwtDecode } from "jwt-decode";
 
-const router = useRouter();
+
+const route = useRouter();
 
 const oldPassword = ref('');
 const newPassword = ref('');
@@ -32,6 +33,7 @@ const checkAdminStatus = () => {
         } else {
             isAdmin = false;
             console.log('User is not an admin');
+            route.push('/');
         }
 
         return decodedToken;
@@ -39,7 +41,7 @@ const checkAdminStatus = () => {
         // User is not logged in
         isAdmin = false;
         //redirect to login page
-        router.push('/');
+        route.push('/');
         console.log('User is not logged in');
     }
 };
@@ -70,7 +72,7 @@ const updatePassword = async () => {
 
         if (response.ok) {
             console.log(result.message);
-            router.push('/');
+            route.push('/');
         } else {
             errorMessage.value = result.message;
             console.error(result.message);

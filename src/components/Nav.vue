@@ -9,6 +9,8 @@
                 to="/">Login</router-link>
             <router-link class="nav-link mx-4 font-bold text-white hover:text-black text-lg md:text-xl"
                 to="/orders">Orders</router-link>
+            <router-link class="nav-link mx-4 font-bold text-white hover:text-black text-lg md:text-xl"
+                to="/updatePassword">Update password</router-link>
         </div>
     </nav>
 </template>

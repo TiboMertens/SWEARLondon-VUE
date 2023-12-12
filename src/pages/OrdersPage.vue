@@ -2,6 +2,7 @@
 import OrderCard from '../components/OrderCard.vue';
 import { ref, onMounted } from 'vue';
 import { jwtDecode } from "jwt-decode";
+import router from '../router';
 
 const shoes = ref([]);
 let totalOrders = ref(0);
@@ -14,31 +15,9 @@ let isAdmin = false;
 
 let decodedToken = ref({});
 
-const fetchShoes = async () => {
-    try {
-        const response = await fetch(`http://localhost:3000/api/v1/shoes`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            shoes.value = result.data;
-            totalOrders.value = result.data.length;
-        } else {
-            console.error(result.message);
-        }
-    } catch (error) {
-        console.error('Error fetching shoes:', error);
-    }
-};
-
 onMounted(() => {
+    decodedToken.value = checkAdminStatus();
     fetchShoes();
-    checkAdminStatus();
 
     socket = new WebSocket('ws://localhost:3000/primus');
 
@@ -53,6 +32,30 @@ onMounted(() => {
         }
     };
 });
+
+const fetchShoes = async () => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/v1/shoes`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            shoes.value = result.data;
+            totalOrders.value = result.data.length;
+        } else {
+            console.error(result.message);
+            router.push('/');
+        }
+    } catch (error) {
+        console.error('Error fetching shoes:', error);
+    }
+};
 
 const checkAdminStatus = () => {
     if (token) {

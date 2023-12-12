@@ -7,6 +7,10 @@ import router from '../router';
 const route = useRoute();
 const orderId = route.params.id;
 
+const props = defineProps(['token']);
+
+const token = ref(props.token);
+
 const deleteOrder = async () => {
     console.log('komt in de functie :)');
     try {
@@ -14,6 +18,7 @@ const deleteOrder = async () => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token.value}`,
             },
         });
 
@@ -21,9 +26,10 @@ const deleteOrder = async () => {
 
         if (response.ok) {
             console.log(result.message);
-            router.push('/');
+            router.push('/orders');
         } else {
             console.error(result.message);
+            router.push('/');
         }
     } catch (error) {
         console.error('Error deleting order:', error);

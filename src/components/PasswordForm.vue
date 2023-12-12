@@ -13,9 +13,11 @@ const token = localStorage.getItem('token');
 
 let isAdmin = false;
 
+let decodedToken = ref({});
+
 onMounted(() => {
     // Check if the user is logged in as an admin
-    const decodedToken = checkAdminStatus();
+    decodedToken.value = checkAdminStatus();
 });
 
 const checkAdminStatus = () => {
@@ -45,18 +47,21 @@ const checkAdminStatus = () => {
 const updatePassword = async () => {
     try {
         // Validate inputs
-        if (!email.value || !password.value) {
-            errorMessage.value = 'Username and password cannot be empty';
+        if (!oldPassword.value || !newPassword.value) {
+            errorMessage.value = 'Both input fields cannot be empty';
             return;
         }
 
-        const response = await fetch(`http://localhost:3000/api/v1/users/${email.value}`, {
+        let id = decodedToken.value.user_id;
+
+        const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                password: password.value,
+                oldPassword: oldPassword.value,
+                newPassword: newPassword.value,
             }),
         });
 
@@ -78,7 +83,7 @@ const updatePassword = async () => {
 
 <template>
     <!-- create a form with mail & password input and a submit button -->
-    <form @submit.prevent="updatePassword">
+    <form @submit.prevent="updatePassword()">
         <div class="mb-[32px]">
             <div class="mb-4">
                 <label for="oldPassword" class="block text-gray-600 text-sm font-semibold mb-2">Old password</label>

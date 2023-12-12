@@ -1,11 +1,18 @@
 <script setup>
 import OrderCard from '../components/OrderCard.vue';
 import { ref, onMounted } from 'vue';
+import { jwtDecode } from "jwt-decode";
 
 const shoes = ref([]);
 let totalOrders = ref(0);
 
 let socket = null;
+
+const token = localStorage.getItem('token');
+
+let isAdmin = false;
+
+let decodedToken = ref({});
 
 const fetchShoes = async () => {
     try {

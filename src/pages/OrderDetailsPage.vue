@@ -5,10 +5,18 @@ import { ref, onMounted } from 'vue';
 
 import DeleteOrder from "../components/DeleteOrder.vue";
 
+import { jwtDecode } from "jwt-decode";
+
 const route = useRoute();
 const orderId = route.params.id;
 
 const order = ref({});
+
+const token = localStorage.getItem('token');
+
+let isAdmin = false;
+
+let decodedToken = ref({});
 
 const fetchOrder = async () => {
     try {

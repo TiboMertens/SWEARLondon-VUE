@@ -39,7 +39,32 @@ const formatDate = (dateString) => {
 
 onMounted(() => {
     fetchOrder();
+    checkAdminStatus();
 });
+
+const checkAdminStatus = () => {
+    if (token) {
+        // Decode the token
+        const decodedToken = jwtDecode(token);
+
+        // Check if the user is an admin
+        if (decodedToken.admin) {
+            isAdmin = true;
+            console.log('User is an admin');
+        } else {
+            isAdmin = false;
+            console.log('User is not an admin');
+        }
+
+        return decodedToken;
+    } else {
+        // User is not logged in
+        isAdmin = false;
+        //redirect to login page
+        router.push('/');
+        console.log('User is not logged in');
+    }
+};
 </script>
 
 <template>

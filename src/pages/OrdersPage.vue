@@ -1,11 +1,18 @@
 <script setup>
 import OrderCard from '../components/OrderCard.vue';
 import { ref, onMounted } from 'vue';
+import { jwtDecode } from "jwt-decode";
 
 const shoes = ref([]);
 let totalOrders = ref(0);
 
 let socket = null;
+
+const token = localStorage.getItem('token');
+
+let isAdmin = false;
+
+let decodedToken = ref({});
 
 const fetchShoes = async () => {
     try {
@@ -31,6 +38,7 @@ const fetchShoes = async () => {
 
 onMounted(() => {
     fetchShoes();
+    checkAdminStatus();
 
     socket = new WebSocket('ws://localhost:3000/primus');
 
@@ -45,6 +53,30 @@ onMounted(() => {
         }
     };
 });
+
+const checkAdminStatus = () => {
+    if (token) {
+        // Decode the token
+        const decodedToken = jwtDecode(token);
+
+        // Check if the user is an admin
+        if (decodedToken.admin) {
+            isAdmin = true;
+            console.log('User is an admin');
+        } else {
+            isAdmin = false;
+            console.log('User is not an admin');
+        }
+
+        return decodedToken;
+    } else {
+        // User is not logged in
+        isAdmin = false;
+        //redirect to login page
+        router.push('/');
+        console.log('User is not logged in');
+    }
+};
 
 </script>
 

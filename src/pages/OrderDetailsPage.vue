@@ -19,6 +19,9 @@ let isAdmin = false;
 
 let decodedToken = ref({});
 
+const selectedStatus = ref("");
+const statusOptions = ["Recieved", "Confirmed", "Processing", "Shipped", "Delivered"];
+
 const fetchOrder = async () => {
     try {
         const response = await fetch(`http://localhost:3000/api/v1/shoes/${orderId}`, {
@@ -42,6 +45,35 @@ const fetchOrder = async () => {
         console.error('Error fetching shoe:', error);
     }
 };
+
+const updateStatus = async () => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/v1/shoes/${orderId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                status: selectedStatus.value,
+            }),
+        });
+
+        const result = await response.json();
+        
+
+        if (response.ok) {
+            order.value = result.data;
+            console.log(result.data);
+        } else {
+            console.error(result.message);
+            router.push('/');
+        }
+    } catch (error) {
+        console.error('Error fetching shoe:', error);
+    }
+};
+
 
 const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -76,6 +108,7 @@ const checkAdminStatus = () => {
         console.log('User is not logged in');
     }
 };
+
 </script>
 
 <template>
@@ -87,7 +120,13 @@ const checkAdminStatus = () => {
                 <p>Order ID: {{ order.id }}</p>
                 <p>Ordered by: {{ order.username }}</p>
                 <p>Order date: {{ formatDate(order.date) }}</p>
-                <p>Order status: {{ order.status }}</p>
+                <p class="mt-5">Order status: {{ order.status }}</p>
+                <p>
+                    <select v-model="selectedStatus">
+                        <option v-for="status in statusOptions" :key="status" :value="status">{{ status }}</option>
+                    </select>
+                    <button @click="updateStatus">Update Status</button>
+                </p>
             </div>
             <div>
                 <h2 class="font-bold text-xl">Customizations</h2>
@@ -109,5 +148,6 @@ const checkAdminStatus = () => {
         </div>
     </div>
 </template>
+
 
 <style scoped></style>

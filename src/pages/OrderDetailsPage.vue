@@ -46,6 +46,9 @@ const fetchOrder = async () => {
     }
 };
 
+let ws = null;
+
+
 const updateStatus = async () => {
     try {
         const response = await fetch(`http://localhost:3000/api/v1/shoes/${orderId}`, {
@@ -63,8 +66,10 @@ const updateStatus = async () => {
         
 
         if (response.ok) {
-            order.value = result.data;
             console.log(result.data);
+            console.log('Status is aangepast');
+            console.log(ws);
+            ws.send(JSON.stringify({ action: "updateStatus", status: selectedStatus.value }));
         } else {
             console.error(result.message);
             router.push('/');
@@ -75,6 +80,8 @@ const updateStatus = async () => {
 };
 
 
+
+
 const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -83,6 +90,18 @@ const formatDate = (dateString) => {
 onMounted(() => {
     fetchOrder();
     checkAdminStatus();
+    ws = new WebSocket('ws://localhost:3000/primus');
+
+    ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            if (data.action === 'updateStatus') {
+                console.log('Status is aangepast');
+                fetchOrder();
+            }
+
+            console.log('WebSocket message received:', data);
+        };
 });
 
 const checkAdminStatus = () => {

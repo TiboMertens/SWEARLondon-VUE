@@ -22,6 +22,10 @@ const logOut = () => {
             <div @click="logOut">
                 <p class="nav-link mx-4 font-bold text-white hover:text-black text-lg md:text-xl cursor-pointer">Log out</p>
             </div>
+            <div>
+                <a href="https://swear-london-configurator.vercel.app/"
+                    class="nav-link mx-4 font-bold text-white hover:text-black text-lg md:text-xl cursor-pointer">Configurator</a>
+            </div>
         </div>
     </nav>
 </template>

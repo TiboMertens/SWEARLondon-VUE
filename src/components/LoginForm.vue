@@ -3,14 +3,12 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 const email = ref('');
 const password = ref('');
 const errorMessage = ref('');
 
-
 const Login = async () => {
-    const response = await fetch('http://localhost:3000/api/v1/users/login', {
+    const response = await fetch('https://swearlondon.onrender.com/api/v1/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -31,8 +29,6 @@ const Login = async () => {
         errorMessage.value = data.message;
     }
 };
-
-
 </script>
 
 <template>
@@ -50,7 +46,6 @@ const Login = async () => {
             </div>
         </div>
         <div v-if="errorMessage" class="text-red-500 mb-4 text-xs">{{ errorMessage }}</div>
-
         <button type="submit"
             class="w-full bg-[#69FF47] text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring focus:border-green-500">
             Log in

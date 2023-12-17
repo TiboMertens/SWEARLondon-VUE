@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 const route = useRouter();
 
 const shoes = ref([]);
+
 let totalOrders = ref(0);
 
 let socket = null;
@@ -21,14 +22,12 @@ onMounted(() => {
     decodedToken.value = checkAdminStatus();
     fetchShoes();
 
-    socket = new WebSocket('ws://localhost:3000/primus');
+    socket = new WebSocket('wss://swearlondon.onrender.com/primus');
 
     //listen for new data
     socket.onmessage = function (event) {
         let order = JSON.parse(event.data);
-        console.log(order);
         if (order.action === 'newOrder') {
-            console.log(order);
             shoes.value.push(order);
             totalOrders.value = shoes.value.length;
         }
@@ -37,7 +36,7 @@ onMounted(() => {
 
 const fetchShoes = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/api/v1/shoes`, {
+        const response = await fetch(`https://swearlondon.onrender.com/api/v1/shoes`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -67,10 +66,8 @@ const checkAdminStatus = () => {
         // Check if the user is an admin
         if (decodedToken.admin) {
             isAdmin = true;
-            console.log('User is an admin');
         } else {
             isAdmin = false;
-            console.log('User is not an admin');
             route.push('/');
         }
 
@@ -80,10 +77,8 @@ const checkAdminStatus = () => {
         isAdmin = false;
         //redirect to login page
         route.push('/');
-        console.log('User is not logged in');
     }
 };
-
 </script>
 
 <template>

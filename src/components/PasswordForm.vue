@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { jwtDecode } from "jwt-decode";
 
-
 const route = useRouter();
 
 const oldPassword = ref('');
@@ -29,10 +28,8 @@ const checkAdminStatus = () => {
         // Check if the user is an admin
         if (decodedToken.admin) {
             isAdmin = true;
-            console.log('User is an admin');
         } else {
             isAdmin = false;
-            console.log('User is not an admin');
             route.push('/');
         }
 
@@ -42,7 +39,6 @@ const checkAdminStatus = () => {
         isAdmin = false;
         //redirect to login page
         route.push('/');
-        console.log('User is not logged in');
     }
 };
 
@@ -56,7 +52,7 @@ const updatePassword = async () => {
 
         let id = decodedToken.value.user_id;
 
-        const response = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
+        const response = await fetch(`https://swearlondon.onrender.com/api/v1/users/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -71,7 +67,6 @@ const updatePassword = async () => {
         const result = await response.json();
 
         if (response.ok) {
-            console.log(result.message);
             route.push('/');
         } else {
             errorMessage.value = result.message;

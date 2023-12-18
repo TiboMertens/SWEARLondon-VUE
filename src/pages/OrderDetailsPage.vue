@@ -36,7 +36,6 @@ const fetchOrder = async () => {
 
         if (response.ok) {
             order.value = result.data;
-            console.log(result.data);
         } else {
             console.error(result.message);
             router.push('/');
@@ -47,7 +46,6 @@ const fetchOrder = async () => {
 };
 
 let ws = null;
-
 
 const updateStatus = async () => {
     try {
@@ -63,12 +61,8 @@ const updateStatus = async () => {
         });
 
         const result = await response.json();
-        
 
         if (response.ok) {
-            console.log(result.data);
-            console.log('Status is aangepast');
-            console.log(ws);
             ws.send(JSON.stringify({ action: "updateStatus", status: selectedStatus.value }));
         } else {
             console.error(result.message);
@@ -79,9 +73,6 @@ const updateStatus = async () => {
     }
 };
 
-
-
-
 const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -90,18 +81,15 @@ const formatDate = (dateString) => {
 onMounted(() => {
     fetchOrder();
     checkAdminStatus();
-    ws = new WebSocket('ws://localhost:3000/primus');
+    ws = new WebSocket('wss://swearlondon.onrender.com/primus');
 
     ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
+        const data = JSON.parse(event.data);
 
-            if (data.action === 'updateStatus') {
-                console.log('Status is aangepast');
-                fetchOrder();
-            }
-
-            console.log('WebSocket message received:', data);
-        };
+        if (data.action === 'updateStatus') {
+            fetchOrder();
+        }
+    };
 });
 
 const checkAdminStatus = () => {
@@ -112,10 +100,8 @@ const checkAdminStatus = () => {
         // Check if the user is an admin
         if (decodedToken.admin) {
             isAdmin = true;
-            console.log('User is an admin');
         } else {
             isAdmin = false;
-            console.log('User is not an admin');
         }
 
         return decodedToken;
@@ -124,7 +110,6 @@ const checkAdminStatus = () => {
         isAdmin = false;
         //redirect to login page
         router.push('/');
-        console.log('User is not logged in');
     }
 };
 
@@ -132,7 +117,10 @@ const checkAdminStatus = () => {
 
 <template>
     <div class="">
-        <h1 class="text-center text-[32px] font-bold pt-10 pb-10">Order details <span class="text-sm font-normal text-red-500"><DeleteOrder :orderId="orderId" :token="token" /></span></h1>
+        <h1 class="text-center text-[32px] font-bold pt-10 pb-10">Order details <span
+                class="text-sm font-normal text-red-500">
+                <DeleteOrder :orderId="orderId" :token="token" />
+            </span></h1>
         <div class="md:flex pb-5 gap-10 justify-center">
             <div>
                 <h2 class="font-bold text-xl">Information</h2>
@@ -167,6 +155,5 @@ const checkAdminStatus = () => {
         </div>
     </div>
 </template>
-
 
 <style scoped></style>

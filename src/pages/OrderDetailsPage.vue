@@ -24,7 +24,7 @@ const statusOptions = ["Recieved", "Confirmed", "Processing", "Shipped", "Delive
 
 const fetchOrder = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/api/v1/shoes/${orderId}`, {
+        const response = await fetch(`https://swearlondon.onrender.com/api/v1/shoes/${orderId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ let ws = null;
 
 const updateStatus = async () => {
     try {
-        const response = await fetch(`http://localhost:3000/api/v1/shoes/${orderId}`, {
+        const response = await fetch(`https://swearlondon.onrender.com/api/v1/shoes/${orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
